@@ -378,9 +378,9 @@ class TestIntegration:
     def test_overfitting_detection(self):
         """Test that increasing polynomial degree eventually leads to overfitting"""
         # Generate simple data
-        np.random.seed(42)
-        X = np.random.rand(50, 2)
-        y = 2 * X[:, 0] + 3 * X[:, 1] + np.random.randn(50) * 0.1
+        rng = np.random.default_rng(42)
+        X = rng.random((50, 2))
+        y = 2 * X[:, 0] + 3 * X[:, 1] + rng.standard_normal(50) * 0.1
         
         analyzer = PolynomialRegressionAnalyzer(random_state=42)
         results = analyzer.fit_polynomial_models(X, y, max_degree=8)
