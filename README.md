@@ -25,8 +25,44 @@ This project uses Python and the following libraries:
 - `matplotlib`
 - `seaborn`
 - `scikit-learn`
+- `pytest` (for testing)
+
+Install all dependencies with:
+```bash
+pip install -r requirements.txt
+```
+
+## Project Structure
+- `polyreg1.ipynb` - Jupyter notebook with analysis and visualizations
+- `polynomial_regression.py` - Python module with core functionality
+- `test_polynomial_regression.py` - Comprehensive unit tests
+- `requirements.txt` - Project dependencies
+- `TESTING.md` - Detailed testing documentation
 
 ## Code Description
+### Python Module (polynomial_regression.py)
+The project includes a reusable Python module with the following components:
+- **PolynomialRegressionAnalyzer**: Main class for fitting polynomial models and analyzing overfitting
+- **calculate_rmse()**: Utility function for RMSE calculation
+- **load_advertising_data()**: Helper function for loading the dataset
+
+#### Usage Example
+```python
+from polynomial_regression import PolynomialRegressionAnalyzer
+
+# Initialize analyzer
+analyzer = PolynomialRegressionAnalyzer(random_state=42)
+
+# Fit models with degrees 1-9
+results = analyzer.fit_polynomial_models(X, y, max_degree=9)
+
+# Get optimal degree
+optimal_degree = analyzer.get_optimal_degree()
+
+# Make predictions
+predictions = analyzer.predict(X_new, degree=optimal_degree)
+```
+
 ### Data Preprocessing
 - The dataset is loaded and separated into predictors (`X`) and target variable (`y`).
 - Polynomial features are generated for increasing degrees (1 to 9).
@@ -93,6 +129,35 @@ plt.xlabel('Dergree')
 plt.ylabel('RMSE')
 plt.ylim(0,4.6)
 ```
+
+## Testing
+
+The project includes comprehensive unit tests for all core functionality. The test suite covers:
+- Polynomial regression model fitting and prediction
+- RMSE calculation and error metrics
+- Data loading and preprocessing
+- Edge cases and error handling
+- Integration tests for complete workflows
+
+### Running Tests
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run all tests
+pytest test_polynomial_regression.py -v
+
+# Run with coverage
+pip install pytest-cov
+pytest test_polynomial_regression.py --cov=polynomial_regression
+```
+
+See [TESTING.md](TESTING.md) for detailed testing documentation.
+
+**Test Statistics:**
+- 32 unit tests covering all major functionality
+- Tests organized into 4 test classes
+- Full coverage of edge cases and error conditions
 
 ## Conclusion
 This project successfully demonstrates how increasing polynomial degrees can lead to overfitting. By analyzing RMSE trends, we highlight the trade-off between bias and variance, providing valuable insights into model complexity and its impact on generalization.
